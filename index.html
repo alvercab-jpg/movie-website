@@ -311,11 +311,6 @@
   flex: 0 0 180px;
 }
   
-    .carousel-arrow:disabled {
-  opacity: 0.15;
-  cursor: default;
-  pointer-events: none;
-}
   </style>
 </head>
 
@@ -590,13 +585,6 @@ popularLeft.addEventListener("click", () => {
   });
 });
 
-popularMovies.addEventListener("scroll", () => {
-  updateCarouselArrows(
-    popularMovies,
-    popularLeft,
-    popularRight
-  );
-});
   
   const boxOfficeMovies = document.getElementById("now-playing-movies");
 const boxOfficeLeft = document.getElementById("box-office-left");
@@ -633,12 +621,7 @@ upcomingLeft.addEventListener("click", () => {
     behavior: "smooth"
   });
 });
-  function updateCarouselArrows(container, leftButton, rightButton) {
-  leftButton.disabled = container.scrollLeft <= 0;
 
-  rightButton.disabled =
-    container.scrollLeft + container.clientWidth >= container.scrollWidth - 5;
-}
 </script>
 </body>
 </html>
