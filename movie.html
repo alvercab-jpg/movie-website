@@ -67,6 +67,14 @@
       margin: 0 0 30px;
     }
 
+    .movie-summary {
+  max-width: 700px;
+  margin: -15px 0 30px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.78);
+  font-size: 16px;
+}
+
     .ratings {
       display: flex;
       gap: 20px;
@@ -117,6 +125,7 @@
   margin: 0 0 20px;
   font-size: 22px;
   color: #102a56;
+  text-align: center;
 }
 
 .review p {
@@ -170,7 +179,9 @@
 
         <h1 id="movie-title" class="movie-title"></h1>
 
-        <div class="ratings">
+<p id="movie-summary" class="movie-summary"></p>
+
+<div class="ratings">
 
           <div class="rating-box">
             <div class="rating-label">Website Rating</div>
@@ -197,7 +208,7 @@
     </div>
     
     <div class="review">
-          <h2>Our Review</h2>
+          <h2>Review</h2>
 
           <p id="movie-review">
             Our review of this movie will appear here.
@@ -237,6 +248,9 @@
 
         document.getElementById("movie-title").textContent =
           movie.title;
+        
+        document.getElementById("movie-summary").textContent =
+  movie.overview;
 
         document.getElementById("movie-poster").src =
           `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
