@@ -28,6 +28,10 @@ export default async function handler(request, response) {
         `&primary_release_date.lte=${toDate}` +
         `&with_release_type=2|3` +
         `&page=1`;
+      
+      } else if (request.query.type === "now-playing") {
+  url =
+    "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
 
     } else {
 
