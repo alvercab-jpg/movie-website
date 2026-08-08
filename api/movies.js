@@ -5,10 +5,12 @@ export default async function handler(request, response) {
     let url;
 
     if (movieId) {
-      url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
-    } else {
-      url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
-    }
+  url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+} else if (request.query.type === "upcoming") {
+  url = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+} else {
+  url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+}
 
     const tmdbResponse = await fetch(url, {
       headers: {
