@@ -462,6 +462,12 @@
         container.appendChild(movieElement);
       });
 
+      updateCarouselArrows(
+        container,
+        document.getElementById("popular-left"),
+        document.getElementById("popular-right")
+      );
+
     } catch (error) {
       container.innerHTML = "<p>Unable to load movies.</p>";
       console.error(error);
@@ -584,6 +590,14 @@ popularLeft.addEventListener("click", () => {
   });
 });
 
+popularMovies.addEventListener("scroll", () => {
+  updateCarouselArrows(
+    popularMovies,
+    popularLeft,
+    popularRight
+  );
+});
+  
   const boxOfficeMovies = document.getElementById("now-playing-movies");
 const boxOfficeLeft = document.getElementById("box-office-left");
 const boxOfficeRight = document.getElementById("box-office-right");
@@ -625,23 +639,6 @@ upcomingLeft.addEventListener("click", () => {
   rightButton.disabled =
     container.scrollLeft + container.clientWidth >= container.scrollWidth - 5;
 }
-  const popularCarousel = document.getElementById("popular-movies");
-const popularLeftButton = document.getElementById("popular-left");
-const popularRightButton = document.getElementById("popular-right");
-
-popularCarousel.addEventListener("scroll", () => {
-  updateCarouselArrows(
-    popularCarousel,
-    popularLeftButton,
-    popularRightButton
-  );
-});
-
-updateCarouselArrows(
-  popularCarousel,
-  popularLeftButton,
-  popularRightButton
-);
 </script>
 </body>
 </html>
