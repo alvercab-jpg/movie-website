@@ -31,7 +31,7 @@ export default async function handler(request, response) {
       
       } else if (request.query.type === "now-playing") {
   url =
-    "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
+    "https://api.themoviedb.org/3/movie/now_playing?language=en-US&region=ES&page=1";
 
     } else {
 
