@@ -426,9 +426,9 @@ async function loadUpcomingMovies() {
 
         <div class="movie-title">${movie.title}</div>
 
-        <div class="rating">
-          ★ ${movie.vote_average.toFixed(1)}
-        </div>
+       <div class="rating">
+  ${movie.vote_average > 0 ? `★ ${movie.vote_average.toFixed(1)}` : ""}
+</div>
       `;
 
       container.appendChild(movieElement);
