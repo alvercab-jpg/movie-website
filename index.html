@@ -563,10 +563,10 @@ async function loadUpcomingMovies() {
   }
 }
   
-  loadPopularMovies();
-  loadUpcomingMovies();
-  loadNowPlayingMovies();
-  
+loadPopularMovies();
+loadUpcomingMovies();
+loadNowPlayingMovies();
+
 const popularMovies = document.getElementById("popular-movies");
 const popularLeft = document.getElementById("popular-left");
 const popularRight = document.getElementById("popular-right");
@@ -585,8 +585,7 @@ popularLeft.addEventListener("click", () => {
   });
 });
 
-  
-  const boxOfficeMovies = document.getElementById("now-playing-movies");
+const boxOfficeMovies = document.getElementById("now-playing-movies");
 const boxOfficeLeft = document.getElementById("box-office-left");
 const boxOfficeRight = document.getElementById("box-office-right");
 
@@ -604,7 +603,7 @@ boxOfficeLeft.addEventListener("click", () => {
   });
 });
 
-  const upcomingMovies = document.getElementById("upcoming-movies");
+const upcomingMovies = document.getElementById("upcoming-movies");
 const upcomingLeft = document.getElementById("upcoming-left");
 const upcomingRight = document.getElementById("upcoming-right");
 
