@@ -233,6 +233,11 @@
 .carousel-right {
   right: -20px;
 }
+
+.carousel-arrow.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
     /* MOBILE */
 
     @media (max-width: 1100px) {
@@ -615,6 +620,30 @@ upcomingLeft.addEventListener("click", () => {
   });
 });
 
+function updateCarouselVisibility(container, leftButton, rightButton) {
+  const atStart = container.scrollLeft <= 5;
+  const atEnd =
+    container.scrollLeft + container.clientWidth >=
+    container.scrollWidth - 5;
+
+  leftButton.classList.toggle("hidden", atStart);
+  rightButton.classList.toggle("hidden", atEnd);
+}
+
+  updateCarouselVisibility(
+  popularMovies,
+  popularLeft,
+  popularRight
+);
+
+popularMovies.addEventListener("scroll", () => {
+  updateCarouselVisibility(
+    popularMovies,
+    popularLeft,
+    popularRight
+  );
+});
+  
 </script>
 </body>
 </html>
