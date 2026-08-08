@@ -630,11 +630,13 @@ function updateCarouselVisibility(container, leftButton, rightButton) {
   rightButton.classList.toggle("hidden", atEnd);
 }
 
+setTimeout(() => {
   updateCarouselVisibility(
-  popularMovies,
-  popularLeft,
-  popularRight
-);
+    popularMovies,
+    popularLeft,
+    popularRight
+  );
+}, 500);
 
 popularMovies.addEventListener("scroll", () => {
   updateCarouselVisibility(
