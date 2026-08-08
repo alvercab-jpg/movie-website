@@ -411,7 +411,7 @@
 
       container.innerHTML = "";
 
-      data.results.slice(0, 20).forEach(movie => {
+      data.results.slice(0, 50).forEach(movie => {
         const movieElement = document.createElement("div");
         movieElement.className = "movie";
 
@@ -559,6 +559,24 @@ popularRight.addEventListener("click", () => {
 
 popularLeft.addEventListener("click", () => {
   popularMovies.scrollBy({
+    left: -600,
+    behavior: "smooth"
+  });
+});
+
+  const boxOfficeMovies = document.getElementById("now-playing-movies");
+const boxOfficeLeft = document.getElementById("box-office-left");
+const boxOfficeRight = document.getElementById("box-office-right");
+
+boxOfficeRight.addEventListener("click", () => {
+  boxOfficeMovies.scrollBy({
+    left: 600,
+    behavior: "smooth"
+  });
+});
+
+boxOfficeLeft.addEventListener("click", () => {
+  boxOfficeMovies.scrollBy({
     left: -600,
     behavior: "smooth"
   });
