@@ -413,9 +413,7 @@ async function loadUpcomingMovies() {
 
     container.innerHTML = "";
 
-    data.results
-      .sort((a, b) => b.popularity - a.popularity)
-      .slice(0, 6)
+    data.results.slice(0, 6)
       .forEach(movie => {
 
         const movieElement = document.createElement("div");
