@@ -5,12 +5,35 @@ export default async function handler(request, response) {
     let url;
 
     if (movieId) {
-  url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
-} else if (request.query.type === "upcoming") {
-  url = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
-} else {
-  url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
-}
+      url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+
+    } else if (request.query.type === "upcoming") {
+
+      const today = new Date();
+      const sixMonths = new Date();
+      sixMonths.setMonth(sixMonths.getMonth() + 6);
+
+      const formatDate = (date) => {
+        return date.toISOString().split("T")[0];
+      };
+
+      const fromDate = formatDate(today);
+      const toDate = formatDate(sixMonths);
+
+      url =
+        `https://api.themoviedb.org/3/discover/movie` +
+        `?language=en-US` +
+        `&sort_by=popularity.desc` +
+        `&primary_release_date.gte=${fromDate}` +
+        `&primary_release_date.lte=${toDate}` +
+        `&with_release_type=2|3` +
+        `&page=1`;
+
+    } else {
+
+      url =
+        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+    }
 
     const tmdbResponse = await fetch(url, {
       headers: {
@@ -30,6 +53,8 @@ export default async function handler(request, response) {
     return response.status(200).json(data);
 
   } catch (error) {
+    console.error(error);
+
     return response.status(500).json({
       error: "Something went wrong"
     });
