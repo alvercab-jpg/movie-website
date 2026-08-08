@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Finding Movie</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #111111;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+      border-bottom: 1px solid #292929;
+      background: #111111;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.7;
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 40px 50px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 22px;
+    }
+
+    /* MOVIE GRID */
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 22px;
+    }
+
+    .movie {
+      cursor: pointer;
+    }
+
+    .poster {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      background: linear-gradient(145deg, #333333, #191919);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+      font-size: 14px;
+      transition: transform 0.2s;
+    }
+
+    .movie:hover .poster {
+      transform: scale(1.03);
+    }
+
+    .movie-title {
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .rating {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #f5c518;
+    }
+
+    /* TRAILERS */
+
+    .trailers {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .trailer {
+      height: 260px;
+      background: #222;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+      .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .trailers {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      main {
+        padding: 30px 20px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+
+  <nav>
+    <div class="logo">FINDING MOVIE</div>
+
+    <ul class="nav-links">
+      <li><a href="#">HOME</a></li>
+      <li><a href="#">TOP RATED</a></li>
+      <li><a href="#">RECOMMENDATIONS</a></li>
+      <li><a href="#">NEWS</a></li>
+      <li><a href="#">STREAMING</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- CONTENT -->
+
+  <main>
+
+    <!-- TRAILERS -->
+
+    <section>
+      <h2 class="section-title">Trailers</h2>
+
+      <div class="trailers">
+        <div class="trailer">TRAILER</div>
+        <div class="trailer">TRAILER</div>
+        <div class="trailer">TRAILER</div>
+      </div>
+    </section>
+
+
+    <!-- TOP BOX OFFICE -->
+
+    <section>
+      <h2 class="section-title">Top Box Office</h2>
+
+      <div class="movie-grid">
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Movie One</div>
+          <div class="rating">★ 8.7/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Movie Two</div>
+          <div class="rating">★ 8.3/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Movie Three</div>
+          <div class="rating">★ 8.1/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Movie Four</div>
+          <div class="rating">★ 7.9/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Movie Five</div>
+          <div class="rating">★ 7.8/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Movie Six</div>
+          <div class="rating">★ 7.6/10</div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- UPCOMING -->
+
+    <section>
+      <h2 class="section-title">Upcoming Releases</h2>
+
+      <div class="movie-grid">
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Upcoming One</div>
+          <div class="rating">★ 8.5/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Upcoming Two</div>
+          <div class="rating">★ 8.2/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Upcoming Three</div>
+          <div class="rating">★ 8.0/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Upcoming Four</div>
+          <div class="rating">★ 7.9/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Upcoming Five</div>
+          <div class="rating">★ 7.7/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Upcoming Six</div>
+          <div class="rating">★ 7.5/10</div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- MOST POPULAR -->
+
+    <section>
+      <h2 class="section-title">Most Popular This Week</h2>
+
+      <div class="movie-grid">
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Popular One</div>
+          <div class="rating">★ 9.1/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Popular Two</div>
+          <div class="rating">★ 8.9/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Popular Three</div>
+          <div class="rating">★ 8.6/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Popular Four</div>
+          <div class="rating">★ 8.4/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Popular Five</div>
+          <div class="rating">★ 8.2/10</div>
+        </div>
+
+        <div class="movie">
+          <div class="poster">MOVIE POSTER</div>
+          <div class="movie-title">Popular Six</div>
+          <div class="rating">★ 8.0/10</div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
