@@ -294,16 +294,17 @@
       }
     }
 
-    .movie-carousel {
+.movie-carousel {
   position: relative;
-  overflow: hidden;
 }
 
 .movie-carousel .movie-grid {
   display: flex;
   flex-wrap: nowrap;
-  overflow: visible;
   gap: 20px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
 }
 
 .movie-carousel .movie {
@@ -538,11 +539,17 @@ const popularLeft = document.getElementById("popular-left");
 const popularRight = document.getElementById("popular-right");
 
 popularRight.addEventListener("click", () => {
-  popularMovies.parentElement.scrollLeft += 600;
+  popularMovies.scrollBy({
+    left: 600,
+    behavior: "smooth"
+  });
 });
 
 popularLeft.addEventListener("click", () => {
-  popularMovies.parentElement.scrollLeft -= 600;
+  popularMovies.scrollBy({
+    left: -600,
+    behavior: "smooth"
+  });
 });
   
 </script>
