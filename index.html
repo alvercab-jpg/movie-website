@@ -134,6 +134,7 @@
       aspect-ratio: 2 / 3;
 
       border-radius: 8px;
+      overflow: hidden;
 
       background:
         linear-gradient(
@@ -156,6 +157,12 @@
         box-shadow 0.25s ease;
     }
 
+    .poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
     .movie:hover .poster {
       transform: translateY(-5px);
       box-shadow:
@@ -370,50 +377,58 @@
     <!-- MOST POPULAR -->
 
     <section>
-      <h2 class="section-title">Most Popular This Week</h2>
+  <h2 class="section-title">Most Popular This Week</h2>
 
-      <div class="movie-grid">
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Popular One</div>
-          <div class="rating">★ 9.1/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Popular Two</div>
-          <div class="rating">★ 8.9/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Popular Three</div>
-          <div class="rating">★ 8.6/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Popular Four</div>
-          <div class="rating">★ 8.4/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Popular Five</div>
-          <div class="rating">★ 8.2/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Popular Six</div>
-          <div class="rating">★ 8.0/10</div>
-        </div>
-
-      </div>
-    </section>
+  <div class="movie-grid" id="popular-movies">
+    <div class="poster">LOADING...</div>
+  </div>
+</section>
 
   </main>
+<script>
+  async function loadPopularMovies() {
+    const container = document.getElementById("popular-movies");
 
+    try {
+      const response = await fetch("/api/movies");
+      const data = await response.json();
+
+      container.innerHTML = "";
+
+      data.results.slice(0, 6).forEach(movie => {
+        const movieElement = document.createElement("div");
+        movieElement.className = "movie";
+
+        const poster = movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          : "";
+
+        movieElement.innerHTML = `
+          <div class="poster">
+            ${
+              poster
+                ? `<img src="${poster}" alt="${movie.title}">`
+                : "NO POSTER"
+            }
+          </div>
+
+          <div class="movie-title">${movie.title}</div>
+
+          <div class="rating">
+            ★ ${movie.vote_average.toFixed(1)}/10
+          </div>
+        `;
+
+        container.appendChild(movieElement);
+      });
+
+    } catch (error) {
+      container.innerHTML = "<p>Unable to load movies.</p>";
+      console.error(error);
+    }
+  }
+
+  loadPopularMovies();
+</script>
 </body>
 </html>
