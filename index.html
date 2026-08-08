@@ -187,10 +187,8 @@
       color: #facc15;
     }
 
-   .movie-carousel {
+.movie-carousel {
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .carousel-arrow {
@@ -200,8 +198,8 @@
 
   z-index: 10;
 
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 90px;
 
   border: none;
   border-radius: 6px;
@@ -209,7 +207,8 @@
   background: rgba(20, 80, 150, 0.45);
   color: white;
 
-  font-size: 30px;
+  font-size: 32px;
+  font-family: Arial, sans-serif;
   line-height: 1;
 
   cursor: pointer;
@@ -218,14 +217,13 @@
   align-items: center;
   justify-content: center;
 
-  padding: 0;
+  padding: 0 0 3px 0;
 
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .carousel-arrow:hover {
   background: rgba(40, 110, 200, 1);
-  transform: translateY(-50%);
 }
 
 .carousel-left {
