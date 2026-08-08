@@ -295,14 +295,19 @@
     }
 
     .movie-carousel {
+  position: relative;
   overflow: hidden;
 }
 
 .movie-carousel .movie-grid {
   display: flex;
   flex-wrap: nowrap;
-  overflow: hidden;
+  overflow: visible;
   gap: 20px;
+}
+
+.movie-carousel .movie {
+  flex: 0 0 180px;
 }
   </style>
 </head>
