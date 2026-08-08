@@ -457,12 +457,6 @@
         container.appendChild(movieElement);
       });
 
-      updateCarouselArrows(
-        container,
-        document.getElementById("popular-left"),
-        document.getElementById("popular-right")
-      );
-
     } catch (error) {
       container.innerHTML = "<p>Unable to load movies.</p>";
       console.error(error);
