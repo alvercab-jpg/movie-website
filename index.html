@@ -310,6 +310,12 @@
 .movie-carousel .movie {
   flex: 0 0 180px;
 }
+  
+    .carousel-arrow:disabled {
+  opacity: 0.15;
+  cursor: default;
+  pointer-events: none;
+}
   </style>
 </head>
 
@@ -613,7 +619,29 @@ upcomingLeft.addEventListener("click", () => {
     behavior: "smooth"
   });
 });
-  
+  function updateCarouselArrows(container, leftButton, rightButton) {
+  leftButton.disabled = container.scrollLeft <= 0;
+
+  rightButton.disabled =
+    container.scrollLeft + container.clientWidth >= container.scrollWidth - 5;
+}
+  const popularCarousel = document.getElementById("popular-movies");
+const popularLeftButton = document.getElementById("popular-left");
+const popularRightButton = document.getElementById("popular-right");
+
+popularCarousel.addEventListener("scroll", () => {
+  updateCarouselArrows(
+    popularCarousel,
+    popularLeftButton,
+    popularRightButton
+  );
+});
+
+updateCarouselArrows(
+  popularCarousel,
+  popularLeftButton,
+  popularRightButton
+);
 </script>
 </body>
 </html>
