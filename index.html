@@ -282,49 +282,13 @@
 
     <!-- TOP BOX OFFICE -->
 
-    <section>
-      <h2 class="section-title">Top Box Office</h2>
+   <section>
+  <h2 class="section-title">Top Box Office</h2>
 
-      <div class="movie-grid">
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Movie One</div>
-          <div class="rating">★ 8.7/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Movie Two</div>
-          <div class="rating">★ 8.3/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Movie Three</div>
-          <div class="rating">★ 8.1/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Movie Four</div>
-          <div class="rating">★ 7.9/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Movie Five</div>
-          <div class="rating">★ 7.8/10</div>
-        </div>
-
-        <div class="movie">
-          <div class="poster">MOVIE POSTER</div>
-          <div class="movie-title">Movie Six</div>
-          <div class="rating">★ 7.6/10</div>
-        </div>
-
-      </div>
-    </section>
+  <div class="movie-grid" id="now-playing-movies">
+    <div class="poster">LOADING...</div>
+  </div>
+</section>
 
         <!-- MOST POPULAR -->
 
@@ -440,8 +404,62 @@ async function loadUpcomingMovies() {
     console.error(error);
   }
 }
+  async function loadNowPlayingMovies() {
+  const container = document.getElementById("now-playing-movies");
+
+  try {
+    const response = await fetch("/api/movies?type=now-playing");
+    const data = await response.json();
+
+    container.innerHTML = "";
+
+    data.results
+      .sort((a, b) => b.popularity - a.popularity)
+      .slice(0, 6)
+      .forEach(movie => {
+
+        const movieElement = document.createElement("div");
+        movieElement.className = "movie";
+
+        movieElement.onclick = () => {
+          window.location.href = `movie.html?id=${movie.id}`;
+        };
+
+        const poster = movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          : "";
+
+        movieElement.innerHTML = `
+          <div class="poster">
+            ${
+              poster
+                ? `<img src="${poster}" alt="${movie.title}">`
+                : "NO POSTER"
+            }
+          </div>
+
+          <div class="movie-title">${movie.title}</div>
+
+          <div class="rating">
+            ${movie.vote_average > 0
+              ? `★ ${movie.vote_average.toFixed(1)}`
+              : ""}
+          </div>
+        `;
+
+        container.appendChild(movieElement);
+      });
+
+  } catch (error) {
+    container.innerHTML = "<p>Unable to load movies.</p>";
+    console.error(error);
+  }
+}
+  
   loadPopularMovies();
   loadUpcomingMovies();
+  loadNowPlayingMovies();
+  
 </script>
 </body>
 </html>
