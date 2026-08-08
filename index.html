@@ -532,22 +532,17 @@ async function loadUpcomingMovies() {
   loadPopularMovies();
   loadUpcomingMovies();
   loadNowPlayingMovies();
+  
 const popularMovies = document.getElementById("popular-movies");
 const popularLeft = document.getElementById("popular-left");
 const popularRight = document.getElementById("popular-right");
 
 popularRight.addEventListener("click", () => {
-  popularMovies.scrollBy({
-    left: 600,
-    behavior: "smooth"
-  });
+  popularMovies.parentElement.scrollLeft += 600;
 });
 
 popularLeft.addEventListener("click", () => {
-  popularMovies.scrollBy({
-    left: -600,
-    behavior: "smooth"
-  });
+  popularMovies.parentElement.scrollLeft -= 600;
 });
   
 </script>
