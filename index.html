@@ -471,16 +471,6 @@
           <div class="rating">
             ★ ${movie.vote_average.toFixed(1)}
           </div>
-          
-          <div class="release-date">
-  ${movie.release_date
-    ? new Date(movie.release_date + "T00:00:00").toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric"
-      })
-    : ""}
-</div>
         `;
 
         container.appendChild(movieElement);
@@ -525,6 +515,16 @@ async function loadUpcomingMovies() {
 
        <div class="rating">
   ${movie.vote_average > 0 ? `★ ${movie.vote_average.toFixed(1)}` : ""}
+</div>
+
+ <div class="release-date">
+  ${movie.release_date
+    ? new Date(movie.release_date + "T00:00:00").toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      })
+    : ""}
 </div>
       `;
 
