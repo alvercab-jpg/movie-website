@@ -5,7 +5,7 @@ export default async function handler(request, response) {
     let url;
 
     if (movieId) {
-      url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+      url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=credits`;
 
     } else if (request.query.type === "upcoming") {
 
