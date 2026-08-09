@@ -650,6 +650,22 @@ popularMovies.addEventListener("scroll", () => {
     popularRight
   );
 });
+
+  setTimeout(() => {
+  updateCarouselVisibility(
+    boxOfficeMovies,
+    boxOfficeLeft,
+    boxOfficeRight
+  );
+}, 500);
+
+boxOfficeMovies.addEventListener("scroll", () => {
+  updateCarouselVisibility(
+    boxOfficeMovies,
+    boxOfficeLeft,
+    boxOfficeRight
+  );
+});
   
 </script>
 </body>
