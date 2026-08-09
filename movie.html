@@ -293,7 +293,7 @@
         `${movie.title} — Find Your Next Favourite Movie`;
 
       document.getElementById("movie-title").textContent =
-        movie.title;
+  `${movie.title} (${movie.release_date ? movie.release_date.substring(0, 4) : ""})`;
 
       document.getElementById("movie-summary").textContent =
         movie.overview;
