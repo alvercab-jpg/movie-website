@@ -666,6 +666,22 @@ boxOfficeMovies.addEventListener("scroll", () => {
     boxOfficeRight
   );
 });
+
+  setTimeout(() => {
+  updateCarouselVisibility(
+    upcomingMovies,
+    upcomingLeft,
+    upcomingRight
+  );
+}, 500);
+
+upcomingMovies.addEventListener("scroll", () => {
+  updateCarouselVisibility(
+    upcomingMovies,
+    upcomingLeft,
+    upcomingRight
+  );
+});
   
 </script>
 </body>
