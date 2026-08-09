@@ -112,6 +112,34 @@
       cursor: pointer;
     }
 
+    .title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.movie-runtime {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+.movie-credits {
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.movie-credits p {
+  margin-bottom: 5px;
+}
+
+.movie-credits strong {
+  color: #ffffff;
+}
+
     .review {
   margin-top: 50px;
   background: #f1f0eb;
@@ -179,9 +207,24 @@
 
       <div class="movie-info">
 
-        <h1 id="movie-title" class="movie-title"></h1>
+      <div class="title-row">
+  <h1 id="movie-title" class="movie-title"></h1>
+  <span id="movie-runtime" class="movie-runtime"></span>
+</div>
 
 <p id="movie-summary" class="movie-summary"></p>
+
+<div class="movie-credits">
+  <p>
+    <strong>Director:</strong>
+    <span id="movie-director">—</span>
+  </p>
+
+  <p>
+    <strong>Writers:</strong>
+    <span id="movie-writers">—</span>
+  </p>
+</div>
 
 <div class="ratings">
 
@@ -220,72 +263,125 @@
 
   </main>
 
-  <script>
+<script>
 
-    async function loadMovie() {
+  async function loadMovie() {
 
-      const params = new URLSearchParams(window.location.search);
-      const movieId = params.get("id");
+    const params = new URLSearchParams(window.location.search);
+    const movieId = params.get("id");
 
-      if (!movieId) {
-        document.getElementById("loading").textContent =
-          "Movie not found.";
-        return;
+    if (!movieId) {
+      document.getElementById("loading").textContent =
+        "Movie not found.";
+      return;
+    }
+
+    try {
+
+      const response = await fetch(
+        `/api/movies?id=${movieId}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Movie request failed");
       }
 
-      try {
+      const movie = await response.json();
 
-        const response = await fetch(
-  `/api/movies?id=${movieId}`
-);
+      document.title =
+        `${movie.title} — Find Your Next Favourite Movie`;
 
-        if (!response.ok) {
-          throw new Error("Movie request failed");
+      document.getElementById("movie-title").textContent =
+        movie.title;
+
+      document.getElementById("movie-summary").textContent =
+        movie.overview;
+
+      document.getElementById("movie-poster").src =
+        `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+
+      document.getElementById("movie-poster").alt =
+        movie.title;
+
+
+      // RUNTIME
+
+      if (movie.runtime) {
+
+        const hours = Math.floor(movie.runtime / 60);
+        const minutes = movie.runtime % 60;
+
+        let runtimeText = "";
+
+        if (hours > 0) {
+          runtimeText += `${hours}h`;
         }
 
-        const movie = await response.json();
+        if (minutes > 0) {
+          runtimeText += ` ${minutes}min`;
+        }
 
-        document.title =
-          `${movie.title} — Find Your Next Favourite Movie`;
-
-        document.getElementById("movie-title").textContent =
-          movie.title;
-        
-        document.getElementById("movie-summary").textContent =
-  movie.overview;
-
-        document.getElementById("movie-poster").src =
-          `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-
-        document.getElementById("movie-poster").alt =
-          movie.title;
-
-        document.getElementById("website-rating").textContent =
-          "—";
-
-        document.getElementById("user-rating").textContent =
-          "—";
-
-        document.getElementById("loading").style.display =
-          "none";
-
-        document.getElementById("movie-content").style.display =
-          "flex";
-
-      } catch (error) {
-
-        console.error(error);
-
-        document.getElementById("loading").textContent =
-          "Unable to load this movie.";
+        document.getElementById("movie-runtime").textContent =
+          runtimeText.trim();
 
       }
+
+
+      // DIRECTOR
+
+      const director = movie.credits?.crew?.find(
+        person => person.job === "Director"
+      );
+
+      document.getElementById("movie-director").textContent =
+        director ? director.name : "—";
+
+
+      // WRITERS
+
+      const writers = movie.credits?.crew
+        ?.filter(person =>
+          person.department === "Writing" ||
+          person.job === "Writer" ||
+          person.job === "Screenplay"
+        )
+        .map(person => person.name)
+        .filter((name, index, array) =>
+          array.indexOf(name) === index
+        );
+
+      document.getElementById("movie-writers").textContent =
+        writers && writers.length
+          ? writers.join(", ")
+          : "—";
+
+
+      document.getElementById("website-rating").textContent =
+        "—";
+
+      document.getElementById("user-rating").textContent =
+        "—";
+
+      document.getElementById("loading").style.display =
+        "none";
+
+      document.getElementById("movie-content").style.display =
+        "flex";
+
+    } catch (error) {
+
+      console.error(error);
+
+      document.getElementById("loading").textContent =
+        "Unable to load this movie.";
 
     }
 
-    loadMovie();
+  }
 
-  </script>
+  loadMovie();
+
+</script>
 
 </body>
 </html>
