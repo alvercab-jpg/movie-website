@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Streaming Recommendations</title>
+
+  <script>
+    window.va = window.va || function () {
+      (window.vaq = window.vaq || []).push(arguments);
+    };
+  </script>
+
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(37, 99, 235, 0.28),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 25%,
+          rgba(59, 130, 246, 0.18),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #020617,
+          #071b3a 50%,
+          #06152d
+        );
+
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      height: 76px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 50px;
+
+      background: rgba(2, 6, 23, 0.72);
+      border-bottom: 1px solid rgba(96, 165, 250, 0.18);
+
+      backdrop-filter: blur(12px);
+
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #dbeafe;
+      text-decoration: none;
+
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.15;
+
+      text-align: center;
+      white-space: nowrap;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 40px;
+
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #60a5fa;
+    }
+
+    .account-link {
+      color: #dbeafe;
+      text-decoration: none;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      white-space: nowrap;
+
+      margin-left: 28px;
+    }
+
+    .account-link:hover {
+      color: #60a5fa;
+    }
+
+    .profile-nav-icon {
+      width: 34px;
+      height: 34px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      text-decoration: none;
+
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .profile-nav-icon:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    .profile-nav-icon svg {
+      width: 30px;
+      height: 30px;
+      display: block;
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 1450px;
+      margin: auto;
+
+      padding: 55px 50px 100px;
+    }
+
+    .page-title {
+      font-size: 34px;
+      font-weight: 700;
+
+      margin-bottom: 12px;
+    }
+
+    .page-description {
+      color: #bfdbfe;
+
+      font-size: 15px;
+      line-height: 1.6;
+
+      max-width: 800px;
+
+      margin-bottom: 55px;
+    }
+
+    .streaming-section {
+      margin-bottom: 65px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .section-heading span {
+      color: #93c5fd;
+      font-size: 13px;
+    }
+
+    .country-selector {
+  margin: 25px 0 55px;
+  padding: 22px 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+
+  background: rgba(15, 23, 42, 0.55);
+
+  border: 1px solid rgba(96, 165, 250, 0.18);
+  border-radius: 12px;
+}
+
+.country-selector label {
+  color: #dbeafe;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.country-selector select {
+  min-width: 220px;
+
+  padding: 10px 14px;
+
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  border-radius: 8px;
+
+  background: #0f2748;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.country-selector select:focus {
+  outline: none;
+  border-color: #60a5fa;
+}
+
+@media (max-width: 600px) {
+
+  .country-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .country-selector select {
+    width: 100%;
+  }
+
+}
+
+    /* MOVIE CAROUSEL */
+
+    .movie-carousel {
+      position: relative;
+    }
+
+    .movie-grid {
+      display: flex;
+      flex-wrap: nowrap;
+
+      gap: 20px;
+
+      overflow-x: hidden;
+      overflow-y: hidden;
+
+      scroll-behavior: smooth;
+
+      padding-top: 8px;
+      margin-top: -8px;
+    }
+
+    .movie {
+      flex: 0 0 180px;
+
+      min-width: 0;
+
+      cursor: pointer;
+    }
+
+    .poster {
+      position: relative;
+
+      width: 100%;
+      aspect-ratio: 2 / 3;
+
+      border-radius: 8px;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          145deg,
+          #172554,
+          #0f172a
+        );
+
+      border: 1px solid rgba(96, 165, 250, 0.15);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 13px;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .poster img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+    }
+
+    .movie:hover .poster {
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 12px 30px rgba(37, 99, 235, 0.25);
+    }
+
+    .movie-title {
+      margin-top: 11px;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      color: #f8fafc;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rating {
+      margin-top: 6px;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      color: #facc15;
+    }
+
+    /* WISHLIST */
+
+    .wishlist-test {
+      position: absolute;
+
+      top: 8px;
+      right: 8px;
+
+      z-index: 50;
+
+      width: 30px;
+      height: 36px;
+
+      border: none;
+      background: transparent;
+
+      color: #4169E1;
+
+      cursor: pointer;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0;
+    }
+
+    .wishlist-test svg {
+      width: 26px;
+      height: 32px;
+
+      display: block;
+
+      filter:
+        drop-shadow(
+          0 2px 4px rgba(0, 0, 0, 0.65)
+        );
+    }
+
+    .poster:hover .wishlist-test,
+    .wishlist-test.saved {
+      display: flex;
+    }
+
+    .wishlist-test:hover {
+      transform: scale(1.1);
+    }
+
+    .wishlist-message {
+      position: absolute;
+
+      top: 46px;
+      right: 8px;
+
+      padding: 4px 7px;
+
+      background: rgba(2, 6, 23, 0.88);
+
+      color: #93c5fd;
+
+      font-size: 10px;
+      font-weight: 600;
+
+      white-space: nowrap;
+
+      border-radius: 4px;
+
+      pointer-events: none;
+
+      animation: wishlistMessageIn 0.2s ease;
+    }
+
+    @keyframes wishlistMessageIn {
+      from {
+        opacity: 0;
+        transform: translateY(-3px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ARROWS */
+
+    .carousel-arrow {
+      position: absolute;
+
+      top: 42%;
+      transform: translateY(-50%);
+
+      z-index: 10;
+
+      width: 38px;
+      height: 90px;
+
+      border: none;
+      border-radius: 6px;
+
+      background: rgba(20, 80, 150, 0.45);
+
+      color: white;
+
+      font-size: 32px;
+      font-family: Arial, sans-serif;
+
+      line-height: 1;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0 0 3px 0;
+
+      transition:
+        background 0.2s ease,
+        opacity 0.25s ease;
+    }
+
+    .carousel-arrow:hover {
+      background: rgba(40, 110, 200, 1);
+    }
+
+    .carousel-left {
+      left: -20px;
+    }
+
+    .carousel-right {
+      right: -20px;
+    }
+
+    .carousel-arrow.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* LOADING */
+
+    .loading {
+      width: 100%;
+      min-height: 270px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: #93c5fd;
+
+      font-size: 14px;
+    }
+
+    .error {
+      color: #fca5a5;
+      padding: 20px 0;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 1100px) {
+
+      .nav-links {
+        gap: 14px;
+      }
+
+      nav {
+        padding: 0 30px;
+      }
+
+      main {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+    }
+
+    @media (max-width: 800px) {
+
+      nav {
+        padding: 0 25px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      main {
+        padding: 45px 25px 80px;
+      }
+
+      .page-title {
+        font-size: 29px;
+      }
+
+      .section-heading h2 {
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .logo {
+        font-size: 17px;
+      }
+
+      main {
+        padding:
+          35px
+          16px
+          60px;
+      }
+
+      .movie {
+        flex: 0 0 155px;
+      }
+
+      .carousel-left {
+        left: -12px;
+      }
+
+      .carousel-right {
+        right: -12px;
+      }
+
+      .page-title {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+
+    <a href="/index.html" class="logo">
+      FIND YOUR NEXT FAVOURITE MOVIE
+    </a>
+
+    <ul class="nav-links">
+
+      <li>
+        <a href="/top-rated.html">
+          TOP RATED
+        </a>
+      </li>
+
+      <li>
+        <a href="/recommendations.html">
+          PERSONAL<br>
+          RECOMMENDATIONS
+        </a>
+      </li>
+
+      <li>
+        <a href="#">
+          NEWS
+        </a>
+      </li>
+
+      <li>
+        <a href="/streaming.html">
+          STREAMING<br>
+          RECOMMENDATIONS
+        </a>
+      </li>
+
+      <li>
+        <a href="#">
+          FORUM
+        </a>
+      </li>
+
+      <li>
+        <a href="#">
+          HELP<br>
+          IN PRODUCTION
+        </a>
+      </li>
+
+    </ul>
+
+    <div id="account-nav">
+      <a
+        href="/account.html"
+        class="account-link"
+      >
+        LOG IN
+      </a>
+    </div>
+
+  </nav>
+
+
+  <main>
+
+    <h1 class="page-title">
+  Streaming Recommendations
+</h1>
+
+<p class="page-description">
+  Discover the highest-rated movies currently included
+  with your streaming subscription.
+</p>
+
+<div class="country-selector">
+
+  <label for="country-select">
+    Change your country to see the streaming options available to you.
+  </label>
+
+  <select id="country-select">
+    <option value="ES">🇪🇸 Spain</option>
+    <option value="US">🇺🇸 United States</option>
+    <option value="GB">🇬🇧 United Kingdom</option>
+    <option value="CA">🇨🇦 Canada</option>
+    <option value="AU">🇦🇺 Australia</option>
+    <option value="FR">🇫🇷 France</option>
+    <option value="DE">🇩🇪 Germany</option>
+    <option value="IT">🇮🇹 Italy</option>
+    <option value="PT">🇵🇹 Portugal</option>
+    <option value="NL">🇳🇱 Netherlands</option>
+    <option value="BE">🇧🇪 Belgium</option>
+    <option value="IE">🇮🇪 Ireland</option>
+    <option value="SE">🇸🇪 Sweden</option>
+    <option value="NO">🇳🇴 Norway</option>
+    <option value="DK">🇩🇰 Denmark</option>
+    <option value="FI">🇫🇮 Finland</option>
+    <option value="CH">🇨🇭 Switzerland</option>
+    <option value="AT">🇦🇹 Austria</option>
+    <option value="NZ">🇳🇿 New Zealand</option>
+    <option value="JP">🇯🇵 Japan</option>
+    <option value="KR">🇰🇷 South Korea</option>
+    <option value="MX">🇲🇽 Mexico</option>
+    <option value="BR">🇧🇷 Brazil</option>
+    <option value="AR">🇦🇷 Argentina</option>
+  </select>
+
+</div>
+
+
+    <!-- NETFLIX -->
+
+    <section class="streaming-section">
+
+      <div class="section-heading">
+        <h2>Netflix</h2>
+        <span>Top 200</span>
+      </div>
+
+      <div class="movie-carousel">
+
+        <button
+          class="carousel-arrow carousel-left hidden"
+          id="netflix-left"
+          aria-label="Previous Netflix movies"
+        >
+          ‹
+        </button>
+
+        <div
+          class="movie-grid"
+          id="netflix-movies"
+        >
+          <div class="loading">
+            LOADING...
+          </div>
+        </div>
+
+        <button
+          class="carousel-arrow carousel-right"
+          id="netflix-right"
+          aria-label="Next Netflix movies"
+        >
+          ›
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- AMAZON -->
+
+    <section class="streaming-section">
+
+      <div class="section-heading">
+        <h2>Amazon Prime Video</h2>
+        <span>Top 200</span>
+      </div>
+
+      <div class="movie-carousel">
+
+        <button
+          class="carousel-arrow carousel-left hidden"
+          id="prime-left"
+          aria-label="Previous Amazon Prime movies"
+        >
+          ‹
+        </button>
+
+        <div
+          class="movie-grid"
+          id="prime-movies"
+        >
+          <div class="loading">
+            LOADING...
+          </div>
+        </div>
+
+        <button
+          class="carousel-arrow carousel-right"
+          id="prime-right"
+          aria-label="Next Amazon Prime movies"
+        >
+          ›
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- DISNEY -->
+
+    <section class="streaming-section">
+
+      <div class="section-heading">
+        <h2>Disney+</h2>
+        <span>Top 200</span>
+      </div>
+
+      <div class="movie-carousel">
+
+        <button
+          class="carousel-arrow carousel-left hidden"
+          id="disney-left"
+          aria-label="Previous Disney Plus movies"
+        >
+          ‹
+        </button>
+
+        <div
+          class="movie-grid"
+          id="disney-movies"
+        >
+          <div class="loading">
+            LOADING...
+          </div>
+        </div>
+
+        <button
+          class="carousel-arrow carousel-right"
+          id="disney-right"
+          aria-label="Next Disney Plus movies"
+        >
+          ›
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- APPLE -->
+
+    <section class="streaming-section">
+
+      <div class="section-heading">
+        <h2>Apple TV+</h2>
+        <span>Top 200</span>
+      </div>
+
+      <div class="movie-carousel">
+
+        <button
+          class="carousel-arrow carousel-left hidden"
+          id="apple-left"
+          aria-label="Previous Apple TV Plus movies"
+        >
+          ‹
+        </button>
+
+        <div
+          class="movie-grid"
+          id="apple-movies"
+        >
+          <div class="loading">
+            LOADING...
+          </div>
+        </div>
+
+        <button
+          class="carousel-arrow carousel-right"
+          id="apple-right"
+          aria-label="Next Apple TV Plus movies"
+        >
+          ›
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+<script>
+
+let selectedRegion =
+  localStorage.getItem("streamingRegion") || "ES";
+
+const countrySelect =
+  document.getElementById("country-select");
+
+countrySelect.value = selectedRegion;
+
+
+/* COUNTRY CHANGE */
+
+countrySelect.addEventListener("change", () => {
+
+  selectedRegion =
+    countrySelect.value;
+
+  localStorage.setItem(
+    "streamingRegion",
+    selectedRegion
+  );
+
+  loadAllStreamingMovies();
+
+});
+
+
+/* LOAD ONE STREAMING SERVICE */
+
+async function loadStreamingMovies(
+  provider,
+  containerId
+) {
+
+  const container =
+    document.getElementById(containerId);
+
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="loading">
+      LOADING...
+    </div>
+  `;
+
+  try {
+
+    const response =
+      await fetch(
+        `/api/movies?type=streaming&provider=${provider}&region=${selectedRegion}`
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Streaming request failed"
+      );
+    }
+
+    const data =
+      await response.json();
+
+    container.innerHTML = "";
+
+    if (
+      !data.results ||
+      data.results.length === 0
+    ) {
+
+      container.innerHTML = `
+        <div class="loading">
+          No movies available for this service
+          in this country.
+        </div>
+      `;
+
+      updateCarouselArrows(containerId);
+
+      return;
+    }
+
+
+    data.results.forEach(movie => {
+
+      const movieElement =
+        document.createElement("div");
+
+      movieElement.className = "movie";
+
+      movieElement.onclick = () => {
+
+        window.location.href =
+          `movie.html?id=${movie.id}`;
+
+      };
+
+
+      /*
+       * Use poster first.
+       * If TMDB doesn't have one,
+       * use the backdrop instead.
+       */
+
+      const poster =
+        movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          : movie.backdrop_path
+            ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`
+            : "";
+
+
+      movieElement.innerHTML = `
+
+        <div class="poster">
+
+          ${
+            poster
+              ? `
+                <img
+                  src="${poster}"
+                  alt="${movie.title}"
+                >
+              `
+              : "NO POSTER"
+          }
+
+        </div>
+
+        <div class="movie-title">
+          ${movie.title}
+        </div>
+
+        <div class="rating">
+          ★ ${Number(movie.vote_average).toFixed(1)}
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        movieElement
+      );
+
+    });
+
+
+    /*
+     * Reconnect the carousel
+     * after the movies are loaded.
+     */
+
+    setupCarousel(containerId);
+
+
+  } catch (error) {
+
+    console.error(
+      "Streaming:",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="loading">
+        Unable to load movies.
+      </div>
+    `;
+
+    updateCarouselArrows(containerId);
+
+  }
+
+}
+
+
+/* CAROUSEL */
+
+function setupCarousel(containerId) {
+
+  const container =
+    document.getElementById(containerId);
+
+  if (!container) return;
+
+
+  const carousel =
+    container.closest(".movie-carousel");
+
+  if (!carousel) return;
+
+
+  const leftArrow =
+    carousel.querySelector(".carousel-left");
+
+  const rightArrow =
+    carousel.querySelector(".carousel-right");
+
+
+  if (!leftArrow || !rightArrow) {
+    return;
+  }
+
+
+  /*
+   * Remove old handlers by replacing
+   * the buttons with clones.
+   *
+   * This is important because the carousel
+   * gets rebuilt every time the country changes.
+   */
+
+  const newLeft =
+    leftArrow.cloneNode(true);
+
+  const newRight =
+    rightArrow.cloneNode(true);
+
+  leftArrow.replaceWith(newLeft);
+  rightArrow.replaceWith(newRight);
+
+
+  const scrollAmount = 800;
+
+
+  newLeft.addEventListener(
+    "click",
+    () => {
+
+      container.scrollBy({
+        left: -scrollAmount,
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+
+  newRight.addEventListener(
+    "click",
+    () => {
+
+      container.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+
+  function updateArrows() {
+
+    const maxScroll =
+      container.scrollWidth -
+      container.clientWidth;
+
+
+    if (container.scrollLeft <= 5) {
+
+      newLeft.classList.add("hidden");
+
+    } else {
+
+      newLeft.classList.remove("hidden");
+
+    }
+
+
+    if (
+      container.scrollLeft >=
+      maxScroll - 5
+    ) {
+
+      newRight.classList.add("hidden");
+
+    } else {
+
+      newRight.classList.remove("hidden");
+
+    }
+
+  }
+
+
+  container.addEventListener(
+    "scroll",
+    updateArrows
+  );
+
+
+  updateArrows();
+
+}
+
+
+/*
+ * Used when there are no results
+ * or an API error occurs.
+ */
+
+function updateCarouselArrows(containerId) {
+
+  const container =
+    document.getElementById(containerId);
+
+  if (!container) return;
+
+
+  const carousel =
+    container.closest(".movie-carousel");
+
+  if (!carousel) return;
+
+
+  const leftArrow =
+    carousel.querySelector(".carousel-left");
+
+  const rightArrow =
+    carousel.querySelector(".carousel-right");
+
+
+  if (leftArrow) {
+    leftArrow.classList.add("hidden");
+  }
+
+  if (rightArrow) {
+    rightArrow.classList.add("hidden");
+  }
+
+}
+
+
+/* LOAD ALL FOUR SERVICES */
+
+function loadAllStreamingMovies() {
+
+  loadStreamingMovies(
+    "netflix",
+    "netflix-movies"
+  );
+
+  loadStreamingMovies(
+    "prime",
+    "prime-movies"
+  );
+
+  loadStreamingMovies(
+    "disney",
+    "disney-movies"
+  );
+
+  loadStreamingMovies(
+    "apple",
+    "apple-movies"
+  );
+
+}
+
+
+/* INITIAL LOAD */
+
+loadAllStreamingMovies();
+
+</script>
+
+</body>
+</html>

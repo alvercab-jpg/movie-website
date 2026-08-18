@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Find Your Next Favourite Movie</title>
+
+  <script>
+  window.va = window.va || function () {
+    (window.vaq = window.vaq || []).push(arguments);
+  };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(37, 99, 235, 0.28), transparent 30%),
+        radial-gradient(circle at 85% 25%, rgba(59, 130, 246, 0.18), transparent 30%),
+        linear-gradient(135deg, #020617, #071b3a 50%, #06152d);
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+
+      background: rgba(2, 6, 23, 0.72);
+      border-bottom: 1px solid rgba(96, 165, 250, 0.18);
+
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #dbeafe;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #60a5fa;
+}
+
+.nav-search {
+  display: flex;
+  align-items: center;
+}
+
+#search-form {
+  display: flex;
+  align-items: center;
+  height: 34px;
+}
+
+#search-input {
+  width: 120px;
+  height: 34px;
+
+  padding: 0 12px;
+
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-right: none;
+  border-radius: 7px 0 0 7px;
+
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+
+  font-size: 12px;
+  outline: none;
+}
+
+#search-input::placeholder {
+  color: rgba(219, 234, 254, 0.55);
+}
+
+#search-input:focus {
+  border-color: rgba(96, 165, 250, 0.7);
+}
+
+#search-form button {
+  width: 36px;
+  height: 34px;
+
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 0 7px 7px 0;
+
+  background: rgba(37, 99, 235, 0.35);
+  color: white;
+
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#search-form button:hover {
+  background: rgba(37, 99, 235, 0.6);
+}
+
+    .account-link {
+  color: #dbeafe;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: 28px;
+}
+
+.account-link:hover {
+  color: #60a5fa;
+}
+
+    .profile-nav-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.profile-nav-icon:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.profile-nav-icon svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+    /* MAIN */
+
+    main {
+      max-width: 1450px;
+      margin: auto;
+      padding: 45px 50px 90px;
+    }
+
+    section {
+      margin-bottom: 65px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 22px;
+      letter-spacing: 0.2px;
+    }
+
+    /* TRAILERS */
+
+    .trailers {
+  position: relative;
+}
+
+    .trailers-section {
+  margin-bottom: 35px;
+}
+
+.trailer-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+
+  scroll-behavior: smooth;
+
+  padding: 20px 12px;
+
+  scrollbar-width: none;
+  background: transparent;
+}
+.trailer-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.trailer-card {
+  position: relative;
+  flex: 0 0 calc((100% - 40px) / 3);
+  aspect-ratio: 16 / 9;
+
+  border-radius: 12px;
+  overflow: hidden;
+
+  background: #0f172a;
+
+  border: 1px solid rgba(96, 165, 250, 0.2);
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.trailer-card:hover {
+  transform: scale(1.03);
+
+  box-shadow:
+    0 4px 8px rgba(37, 99, 235, 0.18);
+}
+
+.trailer-card iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.trailer-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.trailer-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 45px 16px 14px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9),
+      rgba(0, 0, 0, 0)
+    );
+
+  pointer-events: none;
+}
+
+.trailer-card {
+  flex: 0 0 calc((100% - 40px) / 3);
+}
+
+.trailer-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trailer-name {
+  margin-top: 4px;
+
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+  .trailer-video-container {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.75s ease;
+}
+
+.trailer-video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.trailer-card.playing .trailer-video-container {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.trailer-card.playing .trailer-thumbnail {
+  opacity: 0;
+}
+
+.trailer-thumbnail {
+  transition: opacity 0.75s ease;
+}
+.trailer-carousel {
+  padding-left: 12px;
+  padding-right: 12px;
+  background: transparent;
+}
+    /* MOVIES */
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 24px;
+    }
+
+    .movie {
+      cursor: pointer;
+      min-width: 0;
+    }
+
+    .poster {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+
+      border-radius: 8px;
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          145deg,
+          #172554,
+          #0f172a
+        );
+
+      border: 1px solid rgba(96, 165, 250, 0.15);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 13px;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.movie:hover .poster {
+  transform: translateY(-5px);
+  box-shadow:
+    0 12px 30px rgba(37, 99, 235, 0.25);
+}
+
+    .movie-title {
+      margin-top: 11px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #f8fafc;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rating {
+      margin-top: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #facc15;
+    }
+
+.movie-carousel {
+  position: relative;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+
+  z-index: 10;
+
+  width: 38px;
+  height: 90px;
+
+  border: none;
+  border-radius: 6px;
+
+  background: rgba(20, 80, 150, 0.45);
+  color: white;
+
+  font-size: 32px;
+  font-family: Arial, sans-serif;
+  line-height: 1;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 0 3px 0;
+
+  transition: background 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  background: rgba(40, 110, 200, 1);
+}
+
+.carousel-left {
+  left: -20px;
+}
+
+.carousel-right {
+  right: -20px;
+}
+
+.carousel-arrow.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.carousel-arrow {
+  transition: opacity 0.25s ease;
+}
+    /* MOBILE */
+
+    @media (max-width: 1100px) {
+      .movie-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .trailers {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .trailer:first-child {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 800px) {
+      nav {
+        padding: 0 25px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      main {
+        padding: 35px 25px 70px;
+      }
+
+      .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .trailers {
+        grid-template-columns: 1fr;
+      }
+
+      .trailer:first-child {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .logo {
+        font-size: 17px;
+      }
+
+      main {
+        padding: 30px 16px 60px;
+      }
+
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      .section-title {
+        font-size: 21px;
+      }
+    }
+
+.movie-carousel {
+  position: relative;
+}
+
+.movie-carousel .movie-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+
+  padding-top: 8px;
+  margin-top: -8px;
+}
+
+.movie-carousel .movie {
+  flex: 0 0 180px;
+}
+    .release-date {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #93c5fd;
+  font-weight: 500;
+}
+
+.trailer-carousel,
+.trailer-carousel .trailer-grid,
+.trailer-carousel .trailer-card,
+.trailers-section {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+   .wishlist-test {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 50;
+
+  width: 30px;
+  height: 36px;
+
+  border: none;
+  background: transparent;
+
+  color: #4169E1;
+  cursor: pointer;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+}
+
+.wishlist-test svg {
+  width: 26px;
+  height: 32px;
+  display: block;
+
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.65));
+}
+
+.poster:hover .wishlist-test,
+.wishlist-test.saved {
+  display: flex;
+}
+
+.wishlist-test:hover {
+  transform: scale(1.1);
+}
+
+    .wishlist-message {
+  position: absolute;
+  top: 46px;
+  right: 8px;
+
+  padding: 4px 7px;
+
+  background: rgba(2, 6, 23, 0.88);
+  color: #93c5fd;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  border-radius: 4px;
+
+  pointer-events: none;
+
+  animation: wishlistMessageIn 0.2s ease;
+}
+
+@keyframes wishlistMessageIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  
+  </style>
+</head>
+
+<body>
+
+  <nav>
+  <a href="/index.html" class="logo">
+    FIND YOUR NEXT FAVOURITE MOVIE
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="/top-rated.html">TOP RATED</a></li>
+
+<li>
+  <a href="/recommendations.html">
+    PERSONAL<br>
+    RECOMMENDATIONS
+  </a>
+</li>
+
+    <li><a href="#">NEWS</a></li>
+
+<li>
+  <a href="/streaming.html">
+    STREAMING<br>
+    RECOMMENDATIONS
+  </a>
+</li>
+
+    <li><a href="#">FORUM</a></li>
+
+    <li>
+      <a href="#">
+        HELP<br>
+        IN PRODUCTION
+      </a>
+    </li>
+    <li class="nav-search">
+  <form id="search-form">
+    <input
+      type="search"
+      id="search-input"
+      placeholder="Search movies..."
+      autocomplete="off"
+    >
+    <button type="submit">⌕</button>
+  </form>
+ </li>
+</ul>
+
+  <div id="account-nav">
+    <a href="/account.html" class="account-link">LOG IN</a>
+  </div>
+</nav>
+
+  <main>
+
+    <!-- TRAILERS -->
+
+<section class="trailers-section">
+  <div class="movie-carousel trailer-carousel">
+    
+    <button
+      class="carousel-arrow carousel-left"
+      id="trailers-left"
+      aria-label="Previous trailers"
+    >
+      ‹
+    </button>
+
+    <div class="trailer-grid" id="trailer-grid">
+      <div class="trailer-card">LOADING...</div>
+      <div class="trailer-card">LOADING...</div>
+      <div class="trailer-card">LOADING...</div>
+    </div>
+
+    <button
+      class="carousel-arrow carousel-right"
+      id="trailers-right"
+      aria-label="Next trailers"
+    >
+      ›
+    </button>
+
+  </div>
+</section>
+
+    
+    <!-- MOST POPULAR -->
+
+<section>
+  <h2 class="section-title">Most Popular This Week</h2>
+
+  <div class="movie-carousel">
+
+    <button class="carousel-arrow carousel-left" id="popular-left">
+      ‹
+    </button>
+
+    <div class="movie-grid" id="popular-movies">
+      <div class="poster">LOADING...</div>
+    </div>
+
+    <button class="carousel-arrow carousel-right" id="popular-right">
+      ›
+    </button>
+
+  </div>
+</section>
+
+    <!-- TOP BOX OFFICE -->
+
+<section>
+  <h2 class="section-title">Top Box Office</h2>
+
+  <div class="movie-carousel">
+
+    <button class="carousel-arrow carousel-left" id="box-office-left">
+      ‹
+    </button>
+
+    <div class="movie-grid" id="now-playing-movies">
+      <div class="poster">LOADING...</div>
+    </div>
+
+    <button class="carousel-arrow carousel-right" id="box-office-right">
+      ›
+    </button>
+
+  </div>
+</section>
+
+
+
+    <!-- UPCOMING -->
+
+<!-- UPCOMING -->
+
+<section>
+  <h2 class="section-title">Upcoming Releases</h2>
+
+  <div class="movie-carousel">
+
+    <button class="carousel-arrow carousel-left" id="upcoming-left">
+      ‹
+    </button>
+
+    <div class="movie-grid" id="upcoming-movies">
+      <div class="poster">LOADING...</div>
+    </div>
+
+    <button class="carousel-arrow carousel-right" id="upcoming-right">
+      ›
+    </button>
+
+  </div>
+</section>
+
+  </main>
+<script>
+  async function loadPopularMovies() {
+    const container = document.getElementById("popular-movies");
+
+    try {
+      const response = await fetch("/api/movies");
+      const data = await response.json();
+
+      container.innerHTML = "";
+
+      data.results.slice(0, 50).forEach(movie => {
+        const movieElement = document.createElement("div");
+        movieElement.className = "movie";
+        movieElement.dataset.movieId = movie.id;
+
+        movieElement.onclick = () => {
+  window.location.href = `movie.html?id=${movie.id}`;
+};
+
+        const poster = movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          : "";
+
+        movieElement.innerHTML = `
+          <div class="poster">
+            ${
+              poster
+                ? `<img src="${poster}" alt="${movie.title}">`
+                : "NO POSTER"
+            }
+          </div>
+
+          <div class="movie-title">${movie.title}</div>
+          <div class="rating">
+            ★ ${movie.vote_average.toFixed(1)}
+          </div>
+        `;
+
+        container.appendChild(movieElement);
+
+const posterElement =
+  movieElement.querySelector(".poster");
+
+posterElement.style.position = "relative";
+
+posterElement.appendChild(
+  createWishlistButton(movie.id)
+);
+      });
+
+    } catch (error) {
+      container.innerHTML = "<p>Unable to load movies.</p>";
+      console.error(error);
+    }
+  }
+async function loadUpcomingMovies() {
+  const container = document.getElementById("upcoming-movies");
+
+  try {
+    const response = await fetch("/api/movies?type=upcoming");
+    const data = await response.json();
+
+    container.innerHTML = "";
+
+    data.results.slice(0, 50).forEach(movie => {
+      const movieElement = document.createElement("div");
+      movieElement.className = "movie";
+      movieElement.dataset.movieId = movie.id;
+
+      movieElement.onclick = () => {
+        window.location.href = `movie.html?id=${movie.id}`;
+      };
+
+      const poster = movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        : "";
+
+      movieElement.innerHTML = `
+        <div class="poster">
+          ${
+            poster
+              ? `<img src="${poster}" alt="${movie.title}">`
+              : "NO POSTER"
+          }
+        </div>
+
+        <div class="movie-title">${movie.title}</div>
+
+       <div class="rating">
+  ${movie.vote_average > 0 ? `★ ${movie.vote_average.toFixed(1)}` : ""}
+</div>
+
+ <div class="release-date">
+  ${movie.release_date
+    ? new Date(movie.release_date + "T00:00:00").toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      })
+    : ""}
+</div>
+      `;
+
+      container.appendChild(movieElement);
+
+const posterElement =
+  movieElement.querySelector(".poster");
+
+posterElement.style.position = "relative";
+
+posterElement.appendChild(
+  createWishlistButton(movie.id)
+);
+    });
+
+  } catch (error) {
+    container.innerHTML = "<p>Unable to load movies.</p>";
+    console.error(error);
+  }
+}
+  async function loadNowPlayingMovies() {
+  const container = document.getElementById("now-playing-movies");
+
+  try {
+    const response = await fetch("/api/movies?type=now-playing");
+    const data = await response.json();
+
+    container.innerHTML = "";
+
+    data.results.slice(0, 50)
+      .forEach(movie => {
+
+        const movieElement = document.createElement("div");
+        movieElement.className = "movie";
+        movieElement.dataset.movieId = movie.id;
+
+        movieElement.onclick = () => {
+          window.location.href = `movie.html?id=${movie.id}`;
+        };
+
+        const poster = movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          : "";
+
+        movieElement.innerHTML = `
+          <div class="poster">
+            ${
+              poster
+                ? `<img src="${poster}" alt="${movie.title}">`
+                : "NO POSTER"
+            }
+          </div>
+
+          <div class="movie-title">${movie.title}</div>
+
+          <div class="rating">
+            ${movie.vote_average > 0
+              ? `★ ${movie.vote_average.toFixed(1)}`
+              : ""}
+          </div>
+        `;
+
+        container.appendChild(movieElement);
+
+const posterElement =
+  movieElement.querySelector(".poster");
+
+posterElement.style.position = "relative";
+
+posterElement.appendChild(
+  createWishlistButton(movie.id)
+);
+      });
+
+  } catch (error) {
+    container.innerHTML = "<p>Unable to load movies.</p>";
+    console.error(error);
+  }
+}
+  
+loadPopularMovies();
+loadUpcomingMovies();
+loadNowPlayingMovies();
+
+async function loadTrailers() {
+  const container = document.getElementById("trailer-grid");
+
+  try {
+    const response = await fetch("/api/movies?type=trailers");
+
+    if (!response.ok) {
+      throw new Error("Trailer request failed");
+    }
+
+    const data = await response.json();
+
+    container.innerHTML = "";
+
+    data.results.slice(0, 30).forEach(movie => {
+
+      const trailer = movie.trailer;
+
+      const trailerElement = document.createElement("div");
+      trailerElement.className = "trailer-card";
+
+      trailerElement.innerHTML = `
+        <img
+          class="trailer-thumbnail"
+          src="https://image.tmdb.org/t/p/w780${movie.backdrop_path}"
+          alt="${movie.title}"
+        >
+
+        <div class="trailer-video-container"></div>
+
+        <div class="trailer-info">
+          <div class="trailer-title">
+            ${movie.title}
+          </div>
+
+          <div class="trailer-name">
+            ${trailer.name}
+          </div>
+        </div>
+      `;
+
+      let iframe = null;
+      let hoverTimeout = null;
+
+      trailerElement.addEventListener("mouseenter", () => {
+
+        hoverTimeout = setTimeout(() => {
+
+          const videoContainer =
+            trailerElement.querySelector(".trailer-video-container");
+
+          iframe = document.createElement("iframe");
+
+          iframe.src =
+            `https://www.youtube.com/embed/${trailer.key}` +
+            `?autoplay=1` +
+            `&mute=1` +
+            `&controls=1` +
+            `&rel=0` +
+            `&modestbranding=1`;
+
+          iframe.allow =
+            "autoplay; fullscreen; picture-in-picture";
+
+          iframe.allowFullscreen = true;
+
+          iframe.className = "trailer-video";
+
+          videoContainer.appendChild(iframe);
+
+          trailerElement.classList.add("playing");
+
+        }, 250);
+
+      });
+
+      trailerElement.addEventListener("mouseleave", () => {
+
+        clearTimeout(hoverTimeout);
+
+        trailerElement.classList.remove("playing");
+
+        const videoContainer =
+          trailerElement.querySelector(".trailer-video-container");
+
+        videoContainer.innerHTML = "";
+
+        iframe = null;
+      });
+
+      trailerElement.addEventListener("dblclick", () => {
+
+        if (iframe && iframe.requestFullscreen) {
+          iframe.requestFullscreen();
+        }
+
+      });
+
+      container.appendChild(trailerElement);
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    container.innerHTML =
+      "<div class='trailer-card'>Unable to load trailers.</div>";
+  }
+}
+
+loadTrailers();
+
+const popularMovies = document.getElementById("popular-movies");
+const popularLeft = document.getElementById("popular-left");
+const popularRight = document.getElementById("popular-right");
+
+popularRight.addEventListener("click", () => {
+  popularMovies.scrollBy({
+    left: 600,
+    behavior: "smooth"
+  });
+});
+
+popularLeft.addEventListener("click", () => {
+  popularMovies.scrollBy({
+    left: -600,
+    behavior: "smooth"
+  });
+});
+
+const boxOfficeMovies = document.getElementById("now-playing-movies");
+const boxOfficeLeft = document.getElementById("box-office-left");
+const boxOfficeRight = document.getElementById("box-office-right");
+
+boxOfficeRight.addEventListener("click", () => {
+  boxOfficeMovies.scrollBy({
+    left: 600,
+    behavior: "smooth"
+  });
+});
+
+boxOfficeLeft.addEventListener("click", () => {
+  boxOfficeMovies.scrollBy({
+    left: -600,
+    behavior: "smooth"
+  });
+});
+
+const upcomingMovies = document.getElementById("upcoming-movies");
+const upcomingLeft = document.getElementById("upcoming-left");
+const upcomingRight = document.getElementById("upcoming-right");
+
+upcomingRight.addEventListener("click", () => {
+  upcomingMovies.scrollBy({
+    left: 600,
+    behavior: "smooth"
+  });
+});
+
+upcomingLeft.addEventListener("click", () => {
+  upcomingMovies.scrollBy({
+    left: -600,
+    behavior: "smooth"
+  });
+});
+
+function updateCarouselVisibility(container, leftButton, rightButton) {
+  const atStart = container.scrollLeft <= 5;
+  const atEnd =
+    container.scrollLeft + container.clientWidth >=
+    container.scrollWidth - 5;
+
+  leftButton.classList.toggle("hidden", atStart);
+  rightButton.classList.toggle("hidden", atEnd);
+}
+
+setTimeout(() => {
+  updateCarouselVisibility(
+    popularMovies,
+    popularLeft,
+    popularRight
+  );
+}, 500);
+
+popularMovies.addEventListener("scroll", () => {
+  updateCarouselVisibility(
+    popularMovies,
+    popularLeft,
+    popularRight
+  );
+});
+
+  setTimeout(() => {
+  updateCarouselVisibility(
+    boxOfficeMovies,
+    boxOfficeLeft,
+    boxOfficeRight
+  );
+}, 500);
+
+boxOfficeMovies.addEventListener("scroll", () => {
+  updateCarouselVisibility(
+    boxOfficeMovies,
+    boxOfficeLeft,
+    boxOfficeRight
+  );
+});
+
+  setTimeout(() => {
+  updateCarouselVisibility(
+    upcomingMovies,
+    upcomingLeft,
+    upcomingRight
+  );
+}, 500);
+
+upcomingMovies.addEventListener("scroll", () => {
+  updateCarouselVisibility(
+    upcomingMovies,
+    upcomingLeft,
+    upcomingRight
+  );
+});
+
+const trailerGrid = document.getElementById("trailer-grid");
+const trailersLeft = document.getElementById("trailers-left");
+const trailersRight = document.getElementById("trailers-right");
+
+trailersRight.addEventListener("click", () => {
+  trailerGrid.scrollBy({
+    left: 600,
+    behavior: "smooth"
+  });
+});
+
+trailersLeft.addEventListener("click", () => {
+  trailerGrid.scrollBy({
+    left: -600,
+    behavior: "smooth"
+  });
+});
+
+function updateTrailerArrows() {
+  updateCarouselVisibility(
+    trailerGrid,
+    trailersLeft,
+    trailersRight
+  );
+}
+
+setTimeout(updateTrailerArrows, 500);
+
+trailerGrid.addEventListener("scroll", updateTrailerArrows);
+
+  async function updateAccountNav() {
+  const accountNav = document.getElementById("account-nav");
+
+  if (!accountNav) return;
+
+  try {
+    const response = await fetch("/api/current-user.js");
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data = await response.json();
+
+    if (!data.loggedIn) {
+      return;
+    }
+
+    accountNav.innerHTML = `
+      <a
+        href="/account.html"
+        class="profile-nav-icon"
+        aria-label="My Profile"
+        title="My Profile"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle
+            cx="12"
+            cy="8"
+            r="3.5"
+            stroke="currentColor"
+            stroke-width="1.8"
+          />
+
+          <path
+            d="M5 20C5.8 16.6 8.2 14.5 12 14.5C15.8 14.5 18.2 16.6 19 20"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </a>
+    `;
+
+  } catch (error) {
+    console.error("Could not check account status:", error);
+  }
+}
+
+updateAccountNav();
+
+let wishlistMovieIds = new Set();
+  async function loadWishlistState() {
+  try {
+    const response = await fetch("/api/wishlist.js");
+
+    if (response.status === 401) {
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error("Could not load wishlist");
+    }
+
+    const data = await response.json();
+
+    wishlistMovieIds = new Set(
+      (data.movies || []).map(movie => Number(movie.movie_id))
+    );
+
+    updateWishlistButtons();
+
+  } catch (error) {
+    console.error("Wishlist state:", error);
+  }
+}
+  function createWishlistButton(movieId) {
+  const button = document.createElement("button");
+
+  button.className = "wishlist-test";
+  button.type = "button";
+  button.setAttribute("aria-label", "Add to wishlist");
+
+  if (wishlistMovieIds.has(Number(movieId))) {
+    button.classList.add("saved");
+  }
+
+  button.innerHTML = `
+    <svg
+      viewBox="0 0 24 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 2.5C4 1.67 4.67 1 5.5 1H18.5C19.33 1 20 1.67 20 2.5V26L12 21.2L4 26V2.5Z"
+        fill="${wishlistMovieIds.has(Number(movieId)) ? "currentColor" : "rgba(0,0,0,0.45)"}"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+      />
+    </svg>
+  `;
+
+  updateWishlistButtonAppearance(button);
+
+  button.addEventListener("click", async event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const saved = button.classList.contains("saved");
+
+    try {
+      let response;
+
+      if (saved) {
+        response = await fetch(
+          `/api/wishlist.js?movie_id=${movieId}`,
+          {
+            method: "DELETE"
+          }
+        );
+      } else {
+        response = await fetch("/api/wishlist.js", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            movie_id: Number(movieId)
+          })
+        });
+      }
+
+      const data = await response.json();
+
+      if (response.status === 401) {
+        alert("Please log in first.");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "Wishlist update failed"
+        );
+      }
+
+      if (data.saved) {
+  wishlistMovieIds.add(Number(movieId));
+  button.classList.add("saved");
+
+  button.setAttribute(
+    "aria-label",
+    "Remove from wishlist"
+  );
+
+  updateWishlistButtonAppearance(button);
+  showWishlistMessage(button, "Added to wishlist");
+
+} else {
+  wishlistMovieIds.delete(Number(movieId));
+  button.classList.remove("saved");
+
+  button.setAttribute(
+    "aria-label",
+    "Add to wishlist"
+  );
+
+  updateWishlistButtonAppearance(button);
+  showWishlistMessage(button, "Removed from wishlist");
+}
+
+    } catch (error) {
+      console.error("Wishlist:", error);
+      alert("Could not update your wishlist.");
+    }
+  });
+
+  return button;
+}
+  function updateWishlistButtonAppearance(button) {
+  const saved = button.classList.contains("saved");
+
+  button.innerHTML = `
+    <svg
+      viewBox="0 0 24 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M4 2.5C4 1.67 4.67 1 5.5 1H18.5C19.33 1 20 1.67 20 2.5V26L12 21.2L4 26V2.5Z"
+        fill="${saved ? "currentColor" : "rgba(0,0,0,0.45)"}"
+        stroke="${saved ? "#3b82f6" : "white"}"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+      />
+    </svg>
+  `;
+}
+function updateWishlistButtons() {
+  document
+    .querySelectorAll(".wishlist-test")
+    .forEach(button => {
+      const movieElement = button.closest(".movie");
+
+      if (!movieElement) return;
+
+      const movieId =
+        Number(movieElement.dataset.movieId);
+
+      const saved =
+        wishlistMovieIds.has(movieId);
+
+      button.classList.toggle("saved", saved);
+
+      button.setAttribute(
+        "aria-label",
+        saved
+          ? "Remove from wishlist"
+          : "Add to wishlist"
+      );
+
+      updateWishlistButtonAppearance(button);
+    });
+}
+function showWishlistMessage(button, message) {
+  const existing =
+    button.parentElement.querySelector(".wishlist-message");
+
+  if (existing) {
+    existing.remove();
+  }
+
+  const label = document.createElement("div");
+  label.className = "wishlist-message";
+  label.textContent = message;
+
+  button.parentElement.appendChild(label);
+
+  setTimeout(() => {
+    label.remove();
+  }, 1800);
+}
+
+  loadWishlistState();
+
+  const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+
+searchForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const query = searchInput.value.trim();
+
+  if (!query) {
+    return;
+  }
+
+  window.location.href =
+    `/search.html?query=${encodeURIComponent(query)}`;
+});
+
+</script>
+</body>
+</html>

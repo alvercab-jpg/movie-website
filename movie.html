@@ -19,16 +19,146 @@
       min-height: 100vh;
     }
 
-    header {
-      padding: 25px 6%;
+        /* NAVIGATION */
+
+    nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+
+      background: rgba(2, 6, 23, 0.72);
+      border-bottom: 1px solid rgba(96, 165, 250, 0.18);
+
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: white;
-      text-decoration: none;
-    }
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #dbeafe;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #60a5fa;
+}
+
+    .account-link {
+  color: #dbeafe;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: 28px;
+}
+
+.account-link:hover {
+  color: #60a5fa;
+}
+
+    .profile-nav-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.profile-nav-icon:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.profile-nav-icon svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+.nav-search {
+  display: flex;
+  align-items: center;
+}
+
+#search-form {
+  display: flex;
+  align-items: center;
+  height: 34px;
+}
+
+#search-input {
+  width: 115px;
+  height: 34px;
+
+  padding: 0 12px;
+
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-right: none;
+  border-radius: 7px 0 0 7px;
+
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+
+  font-size: 12px;
+  outline: none;
+}
+
+#search-input::placeholder {
+  color: rgba(219, 234, 254, 0.55);
+}
+
+#search-input:focus {
+  border-color: rgba(96, 165, 250, 0.7);
+}
+
+#search-form button {
+  width: 36px;
+  height: 34px;
+
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 0 7px 7px 0;
+
+  background: rgba(37, 99, 235, 0.35);
+  color: white;
+
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#search-form button:hover {
+  background: rgba(37, 99, 235, 0.6);
+}
 
     .movie-page {
       max-width: 1100px;
@@ -75,43 +205,110 @@
   font-size: 16px;
 }
 
-    .ratings {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 35px;
-      flex-wrap: wrap;
-    }
+.ratings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
 
-    .rating-box {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px;
-      padding: 20px 25px;
-      min-width: 150px;
-    }
+.rating-box {
+  background: #244a7d;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 18px 24px;
+  min-height: 60px;
+  box-sizing: border-box;
+}
 
-    .rating-label {
-      font-size: 14px;
-      opacity: 0.7;
-      margin-bottom: 8px;
-    }
+.rating-label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #cbd5e1;
+}
 
-    .rating-number {
-      font-size: 27px;
-      font-weight: bold;
-    }
+.rating-number {
+  font-size: 27px;
+  font-weight: 700;
+  color: white;
+}
 
-    .your-rating {
-      margin-top: 5px;
-    }
+.your-rating {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 65px;
+}
 
-    .stars {
-      font-size: 28px;
-      letter-spacing: 4px;
-      margin-top: 8px;
-      cursor: pointer;
-    }
+.your-rating .rating-label {
+  margin: 0;
+}
 
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.zero-rating {
+  position: relative;
+  top: 2px;
+}
+
+.stars button {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 22px;
+  height: 28px;
+  font-size: 22px;
+  color: #102a56;
+  cursor: pointer;
+  line-height: 28px;
+}
+
+.stars button:hover {
+  transform: scale(1.1);
+}
+
+.stars button.active {
+  color: #f5c542;
+}
+    .zero-rating {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 6px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #cbd5e1;
+  cursor: pointer;
+}
+
+.zero-rating:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.zero-rating.active {
+  color: #f5c542;
+}
+
+    .your-rating-controls {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+#your-rating-number {
+  min-width: 25px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
     .title-row {
   display: flex;
   align-items: baseline;
@@ -141,6 +338,61 @@
   color: #ffffff;
 }
 
+    .movie-poster-column {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.movie-wishlist-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px 16px;
+
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  border-radius: 8px;
+
+  background: rgba(37, 99, 235, 0.18);
+  color: #dbeafe;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.movie-wishlist-button:hover {
+  background: rgba(37, 99, 235, 0.32);
+  border-color: rgba(96, 165, 250, 0.6);
+  transform: translateY(-1px);
+}
+
+.movie-wishlist-button.added {
+  background: rgba(30, 64, 175, 0.5);
+  border-color: rgba(96, 165, 250, 0.55);
+  color: #ffffff;
+}
+
+.movie-wishlist-message {
+  min-height: 18px;
+  margin-top: 7px;
+
+  text-align: center;
+
+  font-size: 11px;
+  color: #93c5fd;
+}
+
+@media (max-width: 700px) {
+  .movie-poster-column {
+    width: 220px;
+  }
+}
+
     .review {
   margin-top: 50px;
   background: #f1f0eb;
@@ -166,11 +418,158 @@
   font-style: italic;
 }
 
+.review p.has-review {
+  margin: 35px 0 0;
+  text-align: left;
+  line-height: 1.8;
+  color: #303846;
+  font-size: 17px;
+  font-family: "Times New Roman", Times, serif;
+  font-style: normal;
+  text-indent: 30px;
+}
+
     .loading {
       text-align: center;
       margin-top: 100px;
       font-size: 20px;
     }
+
+.user-reviews-section {
+  margin-top: 45px;
+  padding: 30px 0 70px;
+  color: #172033;
+}
+
+.user-reviews-intro {
+  margin-bottom: 25px;
+}
+
+.user-reviews-intro h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.user-reviews-intro p {
+  margin: 0;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.user-review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+
+.user-review-form input,
+.user-review-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #c9cdd4;
+  border-radius: 10px;
+  padding: 13px 15px;
+  font-family: "Times New Roman", serif;
+  font-size: 16px;
+  color: #172033;
+  background: #ffffff;
+}
+
+.user-review-form input::placeholder,
+.user-review-form textarea::placeholder {
+  color: #737985;
+  opacity: 1;
+}
+
+.user-review-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.user-review-form button {
+  display: block;
+  align-self: flex-start;
+  border: none;
+  border-radius: 9px;
+  padding: 11px 22px;
+  background: #707f9a;
+  color: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.user-review-form button:hover {
+  opacity: 0.9;
+}
+
+.comment-message {
+  margin: 0;
+  min-height: 20px;
+  font-size: 14px;
+  color: #303846;
+}
+
+.comments-divider {
+  width: 100%;
+  margin: 40px 0 25px;
+  border-top: 1px solid #d6d8dc;
+}
+
+.comments-title {
+  margin: 0 0 20px;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+.user-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 800px;
+  color: #172033;
+}
+
+.user-comment {
+  background: #f1f0eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.user-comment-name {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #102a56;
+}
+
+.user-comment-text {
+  margin: 0;
+  color: #303846;
+  font-family: "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.user-comment-date {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #737985;
+}
+
+.comments-loading,
+.no-comments {
+  margin: 0;
+  color: #ffffff;
+  font-size: 15px;
+}
 
     @media (max-width: 700px) {
       .movie-content {
@@ -185,14 +584,78 @@
         font-size: 32px;
       }
     }
+
+    @media (max-width: 700px) {
+  .ratings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .your-rating {
+    grid-column: auto;
+  }
+}
   </style>
 </head>
 
 <body>
 
-  <header>
-    <a href="index.html" class="logo">Find Your Next Favourite Movie</a>
-  </header>
+<nav>
+  <a href="/index.html" class="logo">
+    FIND YOUR NEXT FAVOURITE MOVIE
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="/top-rated.html">TOP RATED</a></li>
+
+    <li>
+      <a href="#">
+        PERSONAL<br>
+        RECOMMENDATIONS
+      </a>
+    </li>
+
+    <li><a href="#">NEWS</a></li>
+
+    <li>
+      <a href="#">
+        STREAMING<br>
+        RECOMMENDATIONS
+      </a>
+    </li>
+
+    <li><a href="#">FORUM</a></li>
+
+    <li>
+      <a href="#">
+        HELP<br>
+        IN PRODUCTION
+      </a>
+    </li>
+
+    <li class="nav-search">
+      <form id="search-form">
+
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Search movies..."
+          autocomplete="off"
+        >
+
+        <button type="submit">
+          ⌕
+        </button>
+
+      </form>
+    </li>
+  </ul>
+
+  <div id="account-nav">
+    <a href="/account.html" class="account-link">
+      LOG IN
+    </a>
+  </div>
+</nav>
 
   <main class="movie-page">
 
@@ -202,9 +665,26 @@
 
     <div id="movie-content" class="movie-content" style="display:none;">
 
-      <div class="movie-poster">
-        <img id="movie-poster" src="" alt="">
-      </div>
+      <div class="movie-poster-column">
+
+  <div class="movie-poster">
+    <img id="movie-poster" src="" alt="">
+  </div>
+
+  <button
+    id="wishlist-button"
+    class="movie-wishlist-button"
+    type="button"
+  >
+    Add to wishlist
+  </button>
+
+  <div
+    id="wishlist-message"
+    class="movie-wishlist-message"
+  ></div>
+
+</div>
 
       <div class="movie-info">
 
@@ -227,25 +707,53 @@
   </p>
 </div>
 
-<div class="ratings">
+<div class="ratings-grid">
 
-          <div class="rating-box">
-            <div class="rating-label">Website Rating</div>
-            <div id="website-rating" class="rating-number">—</div>
-          </div>
+  <div class="rating-box">
+    <div class="rating-label">Website Rating</div>
+    <div id="website-rating" class="rating-number">—</div>
+  </div>
 
-          <div class="rating-box">
-            <div class="rating-label">User Rating</div>
-            <div id="user-rating" class="rating-number">—</div>
-          </div>
+  <div class="rating-box">
+    <div class="rating-label">User Rating</div>
+    <div id="user-rating" class="rating-number">—</div>
+  </div>
 
-          <div class="rating-box your-rating">
-            <div class="rating-label">Your Rating</div>
+  <div class="rating-box your-rating">
+    <div class="rating-label">Your Rating</div>
 
-            <div class="stars">
-              ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆
-            </div>
-          </div>
+  <div class="your-rating-controls">
+
+  <button
+    type="button"
+    id="zero-rating"
+    class="zero-rating"
+    data-rating="0"
+  >
+    0
+  </button>
+
+  <div id="your-rating-stars" class="stars">
+    <button type="button" data-rating="1">☆</button>
+    <button type="button" data-rating="2">☆</button>
+    <button type="button" data-rating="3">☆</button>
+    <button type="button" data-rating="4">☆</button>
+    <button type="button" data-rating="5">☆</button>
+    <button type="button" data-rating="6">☆</button>
+    <button type="button" data-rating="7">☆</button>
+    <button type="button" data-rating="8">☆</button>
+    <button type="button" data-rating="9">☆</button>
+    <button type="button" data-rating="10">☆</button>
+  </div>
+
+  <span id="your-rating-number"></span>
+
+</div>
+
+</div>
+  </div>
+
+</div>
 
         </div>
 
@@ -260,16 +768,129 @@
             Our review will be available shortly
           </p>
      </div>
+
+    <section id="user-reviews-section" class="user-reviews-section">
+
+  <div class="user-reviews-intro">
+    <h2>Did you like the movie?</h2>
+    <p>Would you recommend it to others?</p>
+  </div>
+
+  <form id="user-review-form" class="user-review-form">
+
+    <input
+      type="text"
+      id="comment-name"
+      placeholder="Your name"
+      maxlength="50"
+      required
+    >
+
+    <textarea
+      id="comment-text"
+      placeholder="Write your review..."
+      maxlength="2000"
+      required
+    ></textarea>
+
+    <button type="submit">
+      Post Review
+    </button>
+
+    <p id="comment-message" class="comment-message"></p>
+
+  </form>
+
+  <div class="comments-divider"></div>
+
+  <h2 class="comments-title">User Reviews</h2>
+
+  <div id="user-comments-list" class="user-comments-list">
+    <p class="comments-loading">Loading reviews...</p>
+  </div>
+
+  </section>
     
 
   </main>
 
 <script>
 
-  async function loadMovie() {
+  async function updateAccountNav() {
+  const accountNav = document.getElementById("account-nav");
 
-    const params = new URLSearchParams(window.location.search);
-    const movieId = params.get("id");
+  if (!accountNav) return;
+
+  try {
+    const response = await fetch("/api/current-user.js");
+
+    if (!response.ok) {
+      return;
+    }
+
+    const data = await response.json();
+
+    if (!data.loggedIn) {
+      return;
+    }
+
+    accountNav.innerHTML = `
+      <a
+        href="/account.html"
+        class="profile-nav-icon"
+        aria-label="My Profile"
+        title="My Profile"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle
+            cx="12"
+            cy="8"
+            r="3.5"
+            stroke="currentColor"
+            stroke-width="1.8"
+          />
+
+          <path
+            d="M5 20C5.8 16.6 8.2 14.5 12 14.5C15.8 14.5 18.2 16.6 19 20"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </a>
+    `;
+
+  } catch (error) {
+    console.error("Could not check account status:", error);
+  }
+}
+
+updateAccountNav();
+
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+
+searchForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const query = searchInput.value.trim();
+
+  if (!query) {
+    return;
+  }
+
+  window.location.href =
+    `/search.html?query=${encodeURIComponent(query)}`;
+});
+
+  const movieId = new URLSearchParams(window.location.search).get("id");
+
+  async function loadMovie() {
 
     if (!movieId) {
       document.getElementById("loading").textContent =
@@ -278,6 +899,10 @@
     }
 
     try {
+
+      // =========================
+      // LOAD MOVIE FROM TMDB
+      // =========================
 
       const response = await fetch(
         `/api/movies?id=${movieId}`
@@ -293,10 +918,10 @@
         `${movie.title} — Find Your Next Favourite Movie`;
 
       document.getElementById("movie-title").textContent =
-  `${movie.title} (${movie.release_date ? movie.release_date.substring(0, 4) : ""})`;
+        `${movie.title} (${movie.release_date ? movie.release_date.substring(0, 4) : ""})`;
 
       document.getElementById("movie-summary").textContent =
-        movie.overview;
+        movie.overview || "";
 
       document.getElementById("movie-poster").src =
         `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
@@ -305,7 +930,9 @@
         movie.title;
 
 
+      // =========================
       // RUNTIME
+      // =========================
 
       if (movie.runtime) {
 
@@ -324,11 +951,12 @@
 
         document.getElementById("movie-runtime").textContent =
           runtimeText.trim();
-
       }
 
 
+      // =========================
       // DIRECTOR
+      // =========================
 
       const director = movie.credits?.crew?.find(
         person => person.job === "Director"
@@ -338,7 +966,9 @@
         director ? director.name : "—";
 
 
+      // =========================
       // WRITERS
+      // =========================
 
       const writers = movie.credits?.crew
         ?.filter(person =>
@@ -357,17 +987,100 @@
           : "—";
 
 
+      // =========================
+      // DEFAULT WEBSITE RATING
+      // =========================
+
       document.getElementById("website-rating").textContent =
-        "—";
+        movie.vote_average
+          ? `${movie.vote_average.toFixed(1)} (Provisional)`
+          : "—";
 
       document.getElementById("user-rating").textContent =
         "—";
+
+
+      // =========================
+      // LOAD OUR REVIEW
+      // =========================
+
+      try {
+
+        const reviewResponse = await fetch(
+          `/api/reviews?id=${movieId}`
+        );
+
+        console.log(
+          "Review API status:",
+          reviewResponse.status
+        );
+
+        if (reviewResponse.ok) {
+
+          const reviewData =
+            await reviewResponse.json();
+
+          console.log(
+            "Review data:",
+            reviewData
+          );
+
+          // Replace provisional TMDB rating
+          // with our actual website rating
+
+          if (reviewData.rating !== null) {
+            document.getElementById("website-rating").textContent =
+              reviewData.rating;
+          }
+
+          // Replace placeholder review
+
+if (reviewData.review) {
+  const reviewElement =
+    document.getElementById("movie-review");
+
+  reviewElement.innerHTML = "";
+
+  const paragraphs = reviewData.review
+    .split(/\n\s*\n/)
+    .map(paragraph => paragraph.trim())
+    .filter(paragraph => paragraph.length > 0);
+
+  paragraphs.forEach(paragraph => {
+    const p = document.createElement("p");
+
+    p.className = "has-review";
+    p.textContent = paragraph;
+
+    reviewElement.appendChild(p);
+  });
+}
+
+        }
+
+      } catch (reviewError) {
+
+        console.error(
+          "Review loading failed:",
+          reviewError
+        );
+
+        // Keep the provisional TMDB rating.
+        // The movie page itself still works.
+
+      }
+
+
+      // =========================
+      // SHOW PAGE
+      // =========================
 
       document.getElementById("loading").style.display =
         "none";
 
       document.getElementById("movie-content").style.display =
         "flex";
+
 
     } catch (error) {
 
@@ -380,7 +1093,435 @@
 
   }
 
+
   loadMovie();
+  
+const starsContainer = document.getElementById("your-rating-stars");
+const userRatingElement = document.getElementById("user-rating");
+const yourRatingNumber = document.getElementById("your-rating-number");
+
+async function loadUserRating() {
+  try {
+    const response = await fetch(
+      `/api/user-rating.js?movie_id=${movieId}`
+    );
+
+    const data = await response.json();
+
+    console.log("USER RATING DATA:", data);
+
+    if (!response.ok || !data.success) {
+      console.error("Could not load user rating:", data);
+      return;
+    }
+
+    // Show the average user rating
+if (data.averageRating !== null) {
+  userRatingElement.textContent =
+    data.averageRating.toFixed(1);
+} else {
+  userRatingElement.textContent = "—";
+}
+
+    // Highlight the logged-in user's rating
+    if (data.userRating !== null) {
+      highlightStars(data.userRating);
+    }
+
+    // If not logged in, disable the stars
+    if (!data.loggedIn) {
+      starsContainer.querySelectorAll("button").forEach(button => {
+        button.disabled = true;
+        button.title = "Log in to rate this movie";
+      });
+    }
+
+  } catch (error) {
+    console.error("Error loading user rating:", error);
+  }
+}
+
+function highlightStars(rating) {
+
+  const numericRating = Number(rating);
+
+  const zeroButton =
+    document.getElementById("zero-rating");
+
+  // Highlight 0 when the rating is exactly 0
+  if (zeroButton) {
+    zeroButton.classList.toggle(
+      "active",
+      numericRating === 0
+    );
+  }
+
+  // Highlight stars 1–10
+  starsContainer
+    .querySelectorAll("button")
+    .forEach(button => {
+
+      const buttonRating =
+        Number(button.dataset.rating);
+
+      button.textContent =
+        buttonRating <= numericRating
+          ? "★"
+          : "☆";
+
+      button.classList.toggle(
+        "active",
+        buttonRating <= numericRating
+      );
+    });
+
+  // Show the selected number
+  yourRatingNumber.textContent =
+    `${numericRating}/10`;
+}
+
+starsContainer.querySelectorAll("button").forEach(button => {
+  button.addEventListener("click", async () => {
+
+    const rating = Number(button.dataset.rating);
+
+    try {
+      const response = await fetch("/api/user-rating.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          movie_id: movieId,
+          rating: rating
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.error || "Could not save rating.");
+        return;
+      }
+
+      highlightStars(rating);
+
+      // Reload the average so the Users Rating updates immediately
+      await loadUserRating();
+
+    } catch (error) {
+      console.error("Error saving rating:", error);
+      alert("Could not save your rating.");
+    }
+  });
+});
+
+  document
+  .getElementById("zero-rating")
+  .addEventListener("click", async () => {
+
+    const rating = 0;
+
+    try {
+
+      const response = await fetch(
+        "/api/user-rating.js",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            movie_id: movieId,
+            rating: rating
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(
+          data.error ||
+          "Could not save rating."
+        );
+        return;
+      }
+
+      highlightStars(0);
+
+      await loadUserRating();
+
+    } catch (error) {
+
+      console.error(
+        "Error saving rating:",
+        error
+      );
+
+      alert(
+        "Could not save your rating."
+      );
+    }
+  });
+
+loadUserRating();
+
+const reviewForm = document.getElementById("user-review-form");
+const commentName = document.getElementById("comment-name");
+const commentText = document.getElementById("comment-text");
+const commentMessage = document.getElementById("comment-message");
+const commentsList = document.getElementById("user-comments-list");
+
+async function loadUserComments() {
+  try {
+    const response = await fetch(
+      `/api/user-comments.js?movie_id=${movieId}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Could not load reviews.");
+    }
+
+    commentsList.innerHTML = "";
+
+    if (!data.comments || data.comments.length === 0) {
+      commentsList.innerHTML =
+        `<p class="no-comments">No reviews yet. Be the first to share your thoughts!</p>`;
+      return;
+    }
+
+    data.comments.forEach(comment => {
+      const commentBox = document.createElement("div");
+      commentBox.className = "user-comment";
+
+      const name = document.createElement("p");
+      name.className = "user-comment-name";
+      name.textContent = comment.name;
+
+      const text = document.createElement("p");
+      text.className = "user-comment-text";
+      text.textContent = comment.review;
+
+      const date = document.createElement("span");
+      date.className = "user-comment-date";
+
+      if (comment.created_at) {
+        date.textContent = new Date(comment.created_at).toLocaleDateString();
+      }
+
+      commentBox.appendChild(name);
+      commentBox.appendChild(text);
+      commentBox.appendChild(date);
+
+      commentsList.appendChild(commentBox);
+    });
+
+  } catch (error) {
+    console.error("Error loading comments:", error);
+
+    commentsList.innerHTML =
+      `<p class="no-comments">Could not load reviews.</p>`;
+  }
+}
+
+
+reviewForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const name = commentName.value.trim();
+  const review = commentText.value.trim();
+
+  if (!name || !review) {
+    commentMessage.textContent =
+      "Please enter your name and review.";
+    return;
+  }
+
+  commentMessage.textContent = "Posting review...";
+
+  try {
+    const response = await fetch("/api/user-comments.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        movie_id: movieId,
+        name: name,
+        review: review
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Could not post review.");
+    }
+
+    commentName.value = "";
+    commentText.value = "";
+
+    commentMessage.textContent = "Review posted!";
+
+    await loadUserComments();
+
+  } catch (error) {
+    console.error("Error posting review:", error);
+
+    commentMessage.textContent =
+      error.message || "Could not post review.";
+  }
+});
+
+
+loadUserComments();
+
+  const wishlistButton =
+  document.getElementById("wishlist-button");
+
+const wishlistMessage =
+  document.getElementById("wishlist-message");
+
+
+async function loadMovieWishlistState() {
+
+  try {
+
+    const response = await fetch(
+      `/api/wishlist.js?movie_id=${movieId}`
+    );
+
+    if (response.status === 401) {
+      wishlistButton.textContent = "Add to wishlist";
+      return;
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || "Could not load wishlist state."
+      );
+    }
+
+    updateMovieWishlistButton(data.saved);
+
+  } catch (error) {
+
+    console.error(
+      "Wishlist state:",
+      error
+    );
+
+  }
+}
+
+
+function updateMovieWishlistButton(saved) {
+
+  wishlistButton.classList.toggle(
+    "added",
+    saved
+  );
+
+  wishlistButton.textContent =
+    saved
+      ? "Added to wishlist"
+      : "Add to wishlist";
+}
+
+
+wishlistButton.addEventListener(
+  "click",
+  async () => {
+
+    const saved =
+      wishlistButton.classList.contains("added");
+
+    try {
+
+      let response;
+
+      if (saved) {
+
+        response = await fetch(
+          `/api/wishlist.js?movie_id=${movieId}`,
+          {
+            method: "DELETE"
+          }
+        );
+
+      } else {
+
+        response = await fetch(
+          "/api/wishlist.js",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              movie_id: Number(movieId)
+            })
+          }
+        );
+
+      }
+
+      const data = await response.json();
+
+      if (response.status === 401) {
+
+        wishlistMessage.textContent =
+          "Please log in first.";
+
+        return;
+      }
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.error ||
+          "Could not update your wishlist."
+        );
+
+      }
+
+      updateMovieWishlistButton(
+        data.saved
+      );
+
+      wishlistMessage.textContent =
+        data.saved
+          ? "Added to wishlist"
+          : "Removed from wishlist";
+
+      setTimeout(() => {
+
+        wishlistMessage.textContent = "";
+
+      }, 1800);
+
+    } catch (error) {
+
+      console.error(
+        "Wishlist:",
+        error
+      );
+
+      wishlistMessage.textContent =
+        "Could not update your wishlist.";
+
+    }
+
+  }
+);
+
+
+loadMovieWishlistState();
 
 </script>
 
